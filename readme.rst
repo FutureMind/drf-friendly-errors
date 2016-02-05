@@ -97,12 +97,6 @@ configure your own settings
         'UniqueValidator': 50
     }
 
-List of default settings provided by library is listed below:
-
-// TBD
-
-`settings`_
-
 Custom serializer validation
 ----------------------------
 
@@ -147,6 +141,162 @@ If you want to raise field error in validate method use register_error method pr
                                     error_code=8000,
                                     field_name='title')
             return attrs
+
+Default error codes
+-------------------
+
+Following convetion were used:
+
+1xxx - Are reserved for non field errors
+
+2xxx - Are reserved for field errors
+
+3xxx - Are reserved for validator errors
+
+Default field error codes
+-------------------------
+
+Field is required
+
+- 2001: BooleanField, NullBooleanField
+- 2002: CharField, EmailField, RegexField, SlugField, URLField, UUIDField, FilePathField, IPAddressField
+- 2003: IntegerField, FloatField, DecimalField
+- 2004: ChoiceField, MultipleChoiceField
+- 2005: FileField, ImageField
+- 2006: ListField, DictField, JSONField
+- 2007: StringRequiredField, PrimaryKeyRelatedField, HyperlinkedRelatedField, SlugRelatedField, HyperlinkedIdentityField, ManyRelatedField
+- 2008: ReadOnlyField, HiddenField, ModelField, SerializerMethodField
+
+Field data is invalid (invalid regex, string instead of number, date, etc.)
+
+- 2011: BooleanField, NullBooleanField
+- 2012: EmailField, RegexField, SlugField, URLField, UUIDField, IPAddressField
+- 2013: IntegerField, FloatField, DecimalField
+- 2014: FileField, ImageField
+- 2015: DateTimeField, DateField, TimeField, DurationField
+
+Field data cannot be null
+
+- 2021: BooleanField, NullBooleanField
+- 2022: CharField, EmailField, RegexField, SlugField, URLField, UUIDField, FilePathField, IPAddressField
+- 2023: IntegerField, FloatField, DecimalField
+- 2024: ChoiceField, MultipleChoiceField
+- 2025: FileField, ImageField
+- 2026: ListField, DictField, JSONField
+- 2027: StringRequiredField, PrimaryKeyRelatedField, HyperlinkedRelatedField, SlugRelatedField, HyperlinkedIdentityField, ManyRelatedField
+- 2028: ReadOnlyField, HiddenField, ModelField, SerializerMethodField
+
+Field data cannot be blank
+
+- 2031: CharField, EmailField, RegexField, SlugField, URLField, UUIDField, IPAddressField
+
+Field data is too long string
+
+- 2041: CharField, EmailField, RegexField, SlugField, URLField, UUIDField, IPAddressField
+- 2042: IntegerField, FloatField, DecimalField
+- 2043: FileField, ImageField
+
+Field data is too short string
+
+- 2051: CharField, EmailField, RegexField, SlugField, URLField, UUIDField, IPAddressField
+
+Field data is too big number
+
+- 2061: IntegerField, FloatField, DecimalField
+
+Field data is too small number
+
+- 2071: IntegerField, FloatField, DecimalField
+
+Field data do not match any value from available choices
+
+- 2081: ChoiceField, MultipleChoiceField
+- 2082: FilePathField
+- 2083: ManyRelatedField
+
+Field is empty
+
+- 2091: FileField, ImageField
+- 2092: MultipleChoiceField
+- 2093: ManyRelatedField
+
+File has no name
+
+- 2101: FileField, ImageField
+
+File is an invalid image
+
+- 2111: ImageField
+
+Field is not a list
+
+- 2121: MultipleChoiceField
+- 2122: ListField
+- 2123: ManyRelatedField
+
+Field is not a dict
+
+- 2131: DictField
+
+Field is not a json
+
+- 2141: JSONField
+
+Field does not exist (invalid hyperlink, primary key, etc.)
+
+- 2151: PrimaryKeyRelatedField, HyperlinkedRelatedField, SlugRelatedField, HyperlinkedIdentityField
+
+Incorrect type for relation key
+
+- 2161: PrimaryKeyRelatedField, HyperlinkedRelatedField, SlugRelatedField, HyperlinkedIdentityField
+
+Couldn't match url or name to a view
+
+- 2171: HyperlinkedRelatedField, HyperlinkedIdentityField
+
+Expected a DateTime, got Date
+
+- 2181: DateTimeField
+
+Excpected a Date, got DateTime
+
+- 2191: DateField
+
+Too many digits for defined Decimal
+
+- 2201: DecimalField
+
+Too many whole digits for defined Decimal
+
+- 2211: DecimalField
+
+Too many decimal digits for defined Decimal
+
+- 2221: DecimalField
+
+Default built-in validators error codes
+---------------------------------------
+
+- UniqueValidator: 3001
+- UniqueTogetherValidator: 3003
+- UniqueForDateValidator: 3004
+- UniqueForMonthValidator: 3004
+- UniqueForYearValidator: 3005
+- RegexValidator: 3006
+- EmailValidator: 3007
+- URLValidator: 3008
+- MaxValueValidator: 3009
+- MinValueValidator: 3010
+- MaxLengthValidator: 3011
+- MinLengthValidator: 3012
+- DecimalValidator: 3013
+- validate_email: 3014
+- validate_slug: 3015
+- validate_unicode_slug: 3016
+- validate_ipv4_address: 3017
+- validate_ipv46_address: 3018
+- validate_comma_separated_integer_list: 3019
+- int_list_validator: 3020
 
 .. _Django Rest framework: http://django-rest-framework.org/
 .. _settings: https://bitbucket.org/snippets/tlaszczuk/gk4Xz
