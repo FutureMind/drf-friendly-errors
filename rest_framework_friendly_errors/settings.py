@@ -1,5 +1,7 @@
 from django.conf import settings
 
+from rest_framework_friendly_errors.utils import update_field_settings
+
 USER_SETTINGS = getattr(settings, 'FRIENDLY_ERRORS', {})
 
 USER_FRIENDLY_FIELD_ERRORS = USER_SETTINGS.get('FIELD_ERRORS', {})
@@ -84,7 +86,8 @@ FRIENDLY_FIELD_ERRORS = {
     'DurationField': {'invalid': 2002},
 }
 
-FRIENDLY_FIELD_ERRORS.update(USER_FRIENDLY_FIELD_ERRORS)
+FRIENDLY_FIELD_ERRORS = update_field_settings(FRIENDLY_FIELD_ERRORS,
+                                              USER_FRIENDLY_FIELD_ERRORS)
 
 INVALID_DATA_MESSAGE = 'Invalid data. Expected a dictionary, but got {data_type}.'
 
