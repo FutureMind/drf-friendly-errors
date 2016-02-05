@@ -29,35 +29,35 @@ into
         "message" : "Validation Failed",
         "errors" : [
             {
-                "code" : 2001,
+                "code" : 2002,
                 "field" : "name",
                 "message" : "This field is required."
             },
             {
-                "code" : 2004,
+                "code" : 2031,
                 "field" : "password",
                 "message" : "This field may not be blank."
             },
             {
-                "age" : 2003,
+                "age" : 2023,
                 "field" : "age",
                 "message" : "This field may not be null."
             },
             {
-                "age" : 2005,
+                "age" : 2041,
                 "field" : "description",
                 "message" : "Ensure this field has no more than 100 characters."
             },
         ]
     }
 
-Library handles all `Django Rest framework`_ built-in serializer validation.
+Library handles all `Django REST framework`_ built-in serializer validation.
 
 Requirements
 ------------
 -  Python (2.7, 3.4)
 -  Django (1.8, 1.9)
--  Django REST Framework (3.3)
+-  Django REST framework (3.3)
 
 Installation
 ------------
@@ -121,7 +121,7 @@ If you need custom field validation or validation for whole serializer register 
                 raise ValidationError('Title has to include category')
             return attrs
 
-        FIELD_VALIDATION_ERRORS = {'validate_title': 5000} # register your own validation method and assnng it to error code
+        FIELD_VALIDATION_ERRORS = {'validate_title': 5000} # register your own validation method and assign it to error code
         NON_FIELD_ERRORS = {'Title has to include category': 8000} # register non field error messages and assign it to error code
 
 If you want to raise field error in validate method use register_error method provided by a mixin
