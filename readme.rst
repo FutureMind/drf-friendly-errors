@@ -80,10 +80,10 @@ Usage
 Simply add a FriendlyErrorMessagesMixin to your serializer or model serializer class
 
 .. code:: python
+
     from rest_framework_friendly_errors.mixins import FriendlyErrorMessagesMixin
 
     class MySerializer(FriendlyErrorMessagesMixin, ModelSerializer):
-
 
 If you want to change default library settings and provide your own set of error codes for validators or fields,
 configure your own settings
@@ -100,6 +100,7 @@ configure your own settings
 List of default settings provided by library is listed below:
 
 // TBD
+
 `settings`_
 
 Custom serializer validation
