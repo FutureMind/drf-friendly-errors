@@ -13,6 +13,7 @@ def pytest_configure():
         ROOT_URLCONF='tests.urls',
         MIDDLEWARE_CLASSES=(
             'django.middleware.common.CommonMiddleware',
+            'django.contrib.sessions.middleware.SessionMiddleware',
             'django.contrib.auth.middleware.AuthenticationMiddleware',
         ),
         INSTALLED_APPS=(
@@ -20,10 +21,15 @@ def pytest_configure():
             'django.contrib.contenttypes',
 
             'tests',
+            'rest_framework',
         ),
         PASSWORD_HASHERS=(
             'django.contrib.auth.hashers.MD5PasswordHasher',
         ),
+        REST_FRAMEWORK={
+            'EXCEPTION_HANDLER':
+            'rest_framework_friendly_errors.handlers.friendly_exception_handler'
+        }
     )
 
     try:
