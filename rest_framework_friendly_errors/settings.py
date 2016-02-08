@@ -1,6 +1,10 @@
+from __future__ import unicode_literals
+
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from rest_framework_friendly_errors.utils import update_field_settings
+
 
 USER_SETTINGS = getattr(settings, 'FRIENDLY_ERRORS', {})
 
@@ -11,7 +15,7 @@ USER_EXCEPTION_DICT = USER_SETTINGS.get('EXCEPTION_DICT', {})
 
 VALIDATION_FAILED_CODE = USER_SETTINGS.get('VALIDATION_FAILED_CODE', 1000)
 VALIDATION_FAILED_MESSAGE = USER_SETTINGS.get('VALIDATION_FAILED_MESSAGE',
-                                              'Validation Failed')
+                                              _('Validation Failed'))
 
 FRIENDLY_FIELD_ERRORS = {
     'BooleanField': {'required': 2001, 'invalid': 2011, 'null': 2021},

@@ -29,7 +29,8 @@ def pytest_configure():
         REST_FRAMEWORK={
             'EXCEPTION_HANDLER':
             'rest_framework_friendly_errors.handlers.friendly_exception_handler'
-        }
+        },
+        LANGUAGE_CODE='pl'
     )
 
     try:
