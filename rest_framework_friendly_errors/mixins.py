@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import sys
+
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as RestValidationError
 from rest_framework.utils.serializer_helpers import ReturnDict
@@ -103,7 +105,10 @@ class FriendlyErrorMessagesMixin(FieldMap):
 
     def find_key(self, field, message):
         for key in field.error_messages:
-            unformatted = str(field.error_messages[key])
+            if sys.version_info.major == 3:
+                unformatted = str(field.error_messages[key])
+            else:
+                unformatted = unicode(field.error_messages[key])
             kwargs = self.get_field_kwargs(
                 field, self.initial_data.get(field.field_name)
             )

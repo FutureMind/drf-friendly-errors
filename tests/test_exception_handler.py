@@ -4,7 +4,7 @@ from rest_framework.test import APIRequestFactory
 from rest_framework_friendly_errors import settings
 
 from tests import BaseTestCase
-from views import SnippetList
+from tests.views import SnippetList
 
 
 class ExceptionHandlerTestCase(BaseTestCase):
