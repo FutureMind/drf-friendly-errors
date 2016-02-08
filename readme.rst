@@ -68,6 +68,12 @@ By running installation script
 
     $ python setup.py install
 
+Or using pip
+
+.. code:: bash
+
+    $ pip install drf-friendly-errors
+
 Usage
 -----
 
