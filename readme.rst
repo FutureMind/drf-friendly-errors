@@ -85,16 +85,21 @@ Simply add a FriendlyErrorMessagesMixin to your serializer or model serializer c
 
     class MySerializer(FriendlyErrorMessagesMixin, ModelSerializer):
 
-If you want to change default library settings and provide your own set of error codes for validators or fields,
-configure your own settings
+If you want to change default library settings and provide your own set of error codes just add following in your
+settings.py
 
 .. code:: python
 
-    FIELD_ERRORS = {
-        'CharField': {'required': 10, 'null':11, 'blank': 12, 'max_length': 13, 'min_length': 14}
-    }
-    VALIDATOR_ERRORS = {
-        'UniqueValidator': 50
+    FRIENDLY_ERRORS = {
+        FIELD_ERRORS = {
+            'CharField': {'required': 10, 'null':11, 'blank': 12, 'max_length': 13, 'min_length': 14}
+        }
+        VALIDATOR_ERRORS = {
+            'UniqueValidator': 50
+        },
+        EXCEPTION_DICT = {
+            'PermissionDenied': 100
+        }
     }
 
 Custom serializer validation
@@ -142,16 +147,30 @@ If you want to raise field error in validate method use register_error method pr
                                     field_name='title')
             return attrs
 
+Error codes not related to serializer validation
+------------------------------------------------
+
+To turn other type of errors responses into friendly errors responses with error codes
+add this exception handler to your REST_FRAMEWORK settings
+
+.. code:: python
+    REST_FRAMEWORK = {
+        'EXCEPTION_HANDLER':
+        'rest_framework_friendly_errors.handlers.friendly_exception_handler'
+    }
+
 Default error codes
 -------------------
 
-Following convetion were used:
+Following conventions were used:
 
 1xxx - Are reserved for non field errors
 
 2xxx - Are reserved for field errors
 
 3xxx - Are reserved for validator errors
+
+4xxx - Are reserved for other errors not related to serializer validation
 
 Default field error codes
 -------------------------
@@ -298,5 +317,17 @@ Default built-in validators error codes
 - validate_comma_separated_integer_list: 3019
 - int_list_validator: 3020
 
+Other error codes not related to serializer validation
+------------------------------------------------------
+- Server Error: 4000
+- Parser Error (exception was raised by Parser class): 4001,
+- Authentication Failed (invalid credentials were provided): 4002,
+- Not Authenticated (no credentials were provided): 4003,
+- Not Found: 4004,
+- Permission Denied: 4005,
+- Method Not Allowed (invalid HTTP method): 4006,
+- Not Acceptable (Could not satisfy the request Accept header): 4007,
+- Unsupported Media-Type: 4008,
+- Throttled (Too many requests): 4009
+
 .. _Django Rest framework: http://django-rest-framework.org/
-.. _settings: https://bitbucket.org/snippets/tlaszczuk/gk4Xz
