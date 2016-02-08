@@ -65,7 +65,7 @@ if sys.argv[-1] == 'publish':
 
 
 setup(
-    name='djangorestframework-friendly-errors',
+    name='drf-friendly-errors',
     version=version,
     license='MIT',
     description='Extension for displaying serializer validation errors'

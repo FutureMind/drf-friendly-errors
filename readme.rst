@@ -1,5 +1,5 @@
-REST framework friendly errors
-==============================
+DRF Friendly Errors
+===================
 
 **Extension for Django REST framework error display**
 
@@ -67,12 +67,6 @@ By running installation script
 .. code:: bash
 
     $ python setup.py install
-
-Or directly from this repository using ``pip``\...
-
-.. code:: bash
-
-    $ pip install git+https://tlaszczuk@bitbucket.org/tlaszczuk/rest-framework-friendly-errors.git
 
 Usage
 -----
@@ -330,5 +324,14 @@ Other error codes not related to serializer validation
 - Not Acceptable (Could not satisfy the request Accept header): 4007,
 - Unsupported Media-Type: 4008,
 - Throttled (Too many requests): 4009
+
+Tests
+-----
+
+Pull requests won't be accepted without passing tests. You can run the test suite with:
+
+.. code:: python
+
+    python runtests.py
 
 .. _Django Rest framework: http://django-rest-framework.org/

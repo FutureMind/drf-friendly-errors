@@ -15,7 +15,7 @@ def friendly_exception_handler(exc, context):
         error_message = response.data['detail']
         error_code = settings.FRIENDLY_EXCEPTION_DICT.get(
             exc.__class__.__name__)
-        response.data.pop('detail')
+        response.data.pop('detail', {})
         response.data['code'] = error_code
         response.data['message'] = error_message
         response.data['status_code'] = status_code
