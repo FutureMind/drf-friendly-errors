@@ -124,15 +124,15 @@ FRIENDLY_VALIDATOR_ERRORS = {
 FRIENDLY_VALIDATOR_ERRORS.update(USER_VALIDATOR_ERRORS)
 
 FRIENDLY_EXCEPTION_DICT = {
-    'APIException': 5000,
-    'ParseError': 5001,
-    'AuthenticationFailed': 5002,
-    'NotAuthenticated': 5003,
-    'PermissionDenied': 5004,
-    'NotFound': 5005,
-    'MethodNotAllowed': 5006,
-    'NotAcceptable': 5007,
-    'UnsupportedMediaType': 5008,
-    'Throttled': 5009
+    'APIException': 4000,
+    'ParseError': 4001,
+    'AuthenticationFailed': 4002,
+    'NotAuthenticated': 4003,
+    'PermissionDenied': 4004,
+    'NotFound': 4005,
+    'MethodNotAllowed': 4006,
+    'NotAcceptable': 4007,
+    'UnsupportedMediaType': 4008,
+    'Throttled': 4009
 }
 FRIENDLY_EXCEPTION_DICT.update(USER_EXCEPTION_DICT)
