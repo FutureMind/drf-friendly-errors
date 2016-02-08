@@ -154,6 +154,7 @@ To turn other type of errors responses into friendly errors responses with error
 add this exception handler to your REST_FRAMEWORK settings
 
 .. code:: python
+
     REST_FRAMEWORK = {
         'EXCEPTION_HANDLER':
         'rest_framework_friendly_errors.handlers.friendly_exception_handler'
