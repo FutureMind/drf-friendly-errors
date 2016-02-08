@@ -29,35 +29,35 @@ into
         "message" : "Validation Failed",
         "errors" : [
             {
-                "code" : 2001,
+                "code" : 2002,
                 "field" : "name",
                 "message" : "This field is required."
             },
             {
-                "code" : 2004,
+                "code" : 2031,
                 "field" : "password",
                 "message" : "This field may not be blank."
             },
             {
-                "age" : 2003,
+                "age" : 2023,
                 "field" : "age",
                 "message" : "This field may not be null."
             },
             {
-                "age" : 2005,
+                "age" : 2041,
                 "field" : "description",
                 "message" : "Ensure this field has no more than 100 characters."
             },
         ]
     }
 
-Library handles all `Django Rest framework`_ built-in serializer validation.
+Library handles all `Django REST framework`_ built-in serializer validation.
 
 Requirements
 ------------
 -  Python (2.7, 3.4)
 -  Django (1.8, 1.9)
--  Django REST Framework (3.3)
+-  Django REST framework (3.3)
 
 Installation
 ------------
@@ -85,16 +85,21 @@ Simply add a FriendlyErrorMessagesMixin to your serializer or model serializer c
 
     class MySerializer(FriendlyErrorMessagesMixin, ModelSerializer):
 
-If you want to change default library settings and provide your own set of error codes for validators or fields,
-configure your own settings
+If you want to change default library settings and provide your own set of error codes just add following in your
+settings.py
 
 .. code:: python
 
-    FIELD_ERRORS = {
-        'CharField': {'required': 10, 'null':11, 'blank': 12, 'max_length': 13, 'min_length': 14}
-    }
-    VALIDATOR_ERRORS = {
-        'UniqueValidator': 50
+    FRIENDLY_ERRORS = {
+        FIELD_ERRORS = {
+            'CharField': {'required': 10, 'null':11, 'blank': 12, 'max_length': 13, 'min_length': 14}
+        }
+        VALIDATOR_ERRORS = {
+            'UniqueValidator': 50
+        },
+        EXCEPTION_DICT = {
+            'PermissionDenied': 100
+        }
     }
 
 Custom serializer validation
@@ -121,7 +126,7 @@ If you need custom field validation or validation for whole serializer register 
                 raise ValidationError('Title has to include category')
             return attrs
 
-        FIELD_VALIDATION_ERRORS = {'validate_title': 5000} # register your own validation method and assnng it to error code
+        FIELD_VALIDATION_ERRORS = {'validate_title': 5000} # register your own validation method and assign it to error code
         NON_FIELD_ERRORS = {'Title has to include category': 8000} # register non field error messages and assign it to error code
 
 If you want to raise field error in validate method use register_error method provided by a mixin
@@ -142,16 +147,30 @@ If you want to raise field error in validate method use register_error method pr
                                     field_name='title')
             return attrs
 
+Error codes not related to serializer validation
+------------------------------------------------
+
+To turn other type of errors responses into friendly errors responses with error codes
+add this exception handler to your REST_FRAMEWORK settings
+
+.. code:: python
+    REST_FRAMEWORK = {
+        'EXCEPTION_HANDLER':
+        'rest_framework_friendly_errors.handlers.friendly_exception_handler'
+    }
+
 Default error codes
 -------------------
 
-Following convetion were used:
+Following conventions were used:
 
 1xxx - Are reserved for non field errors
 
 2xxx - Are reserved for field errors
 
 3xxx - Are reserved for validator errors
+
+4xxx - Are reserved for other errors not related to serializer validation
 
 Default field error codes
 -------------------------
@@ -298,5 +317,17 @@ Default built-in validators error codes
 - validate_comma_separated_integer_list: 3019
 - int_list_validator: 3020
 
+Other error codes not related to serializer validation
+------------------------------------------------------
+- Server Error: 4000
+- Parser Error (exception was raised by Parser class): 4001,
+- Authentication Failed (invalid credentials were provided): 4002,
+- Not Authenticated (no credentials were provided): 4003,
+- Not Found: 4004,
+- Permission Denied: 4005,
+- Method Not Allowed (invalid HTTP method): 4006,
+- Not Acceptable (Could not satisfy the request Accept header): 4007,
+- Unsupported Media-Type: 4008,
+- Throttled (Too many requests): 4009
+
 .. _Django Rest framework: http://django-rest-framework.org/
-.. _settings: https://bitbucket.org/snippets/tlaszczuk/gk4Xz
