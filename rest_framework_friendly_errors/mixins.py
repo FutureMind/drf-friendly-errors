@@ -158,10 +158,7 @@ class FriendlyErrorMessagesMixin(FieldMap):
                 'message': error}
 
     def get_field_error_entries(self, errors, field):
-        error_list = []
-        for error in errors:
-            error_list.append(self.get_field_error_entry(error, field))
-        return error_list
+        return [self.get_field_error_entry(error, field) for error in errors]
 
     def get_non_field_error_entry(self, error):
         if error in self.registered_errors:
@@ -176,12 +173,7 @@ class FriendlyErrorMessagesMixin(FieldMap):
         return {'code': code, 'field': None, 'message': error}
 
     def get_non_field_error_entries(self, errors):
-        error_list = []
-        for error in errors:
-            error_entry = self.get_non_field_error_entry(error)
-            if error_entry is not None:
-                error_list.append(error_entry)
-        return error_list
+        return [self.get_non_field_error_entry(error) for error in errors]
 
     def build_pretty_errors(self, errors):
         pretty = []
