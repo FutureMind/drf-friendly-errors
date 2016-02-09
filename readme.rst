@@ -112,7 +112,7 @@ If you need custom field validation or validation for whole serializer register 
     class PostSerializer(FriendlyErrorMessagesMixin,
                          serializers.ModelSerializer):
         class Meta:
-            model = Comment
+            model = Post
 
         def validate_title(self, value):
             if value[0] != value[0].upper():
@@ -136,7 +136,7 @@ If you want to raise field error in validate method use register_error method pr
     class PostSerializer(FriendlyErrorMessagesMixin,
                          serializers.ModelSerializer):
         class Meta:
-            model = Comment
+            model = Post
 
         def validate(self, attrs):
             category = attrs.get('category')
