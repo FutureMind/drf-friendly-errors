@@ -16,7 +16,7 @@ class FriendlyErrorMessagesMixin(FieldMap):
     NON_FIELD_ERRORS = {}
 
     def __init__(self, *args, **kwargs):
-        self.registered_errors = []
+        self.registered_errors = {}
         super(FriendlyErrorMessagesMixin, self).__init__(*args, **kwargs)
 
     @property
@@ -55,8 +55,9 @@ class FriendlyErrorMessagesMixin(FieldMap):
                                      (error_key, field_type))
             error = {'code': error_code, 'field': field_name,
                      'message': error_message}
-        self.registered_errors.append(error)
-        raise RestValidationError('')
+        key = '%s_%s_%s' % (error_message, error_code, field_name)
+        self.registered_errors[key] = error
+        raise RestValidationError(key)
 
     def get_field_kwargs(self, field, field_data):
         field_type = field.__class__.__name__
@@ -163,6 +164,9 @@ class FriendlyErrorMessagesMixin(FieldMap):
         return error_list
 
     def get_non_field_error_entry(self, error):
+        if error in self.registered_errors:
+            return self.registered_errors[error]
+
         if settings.INVALID_DATA_MESSAGE.format(
                 data_type=type(self.initial_data).__name__) == error:
             return {'code': settings.FRIENDLY_NON_FIELD_ERRORS.get('invalid'),
@@ -190,9 +194,6 @@ class FriendlyErrorMessagesMixin(FieldMap):
                 pretty.extend(
                     self.get_field_error_entries(errors[error_type], field),
                 )
-        pretty.extend(self.registered_errors)
-        # Remove errors without error message
-        pretty = [error for error in pretty if error['message'] != '']
         if pretty:
             return {'code': settings.VALIDATION_FAILED_CODE,
                     'message': settings.VALIDATION_FAILED_MESSAGE,
