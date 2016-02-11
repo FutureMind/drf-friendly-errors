@@ -126,6 +126,8 @@ class FriendlyErrorMessagesMixin(FieldMap):
                 return validator
 
     def get_field_error_entry(self, error, field):
+        if error in self.registered_errors:
+            return self.registered_errors[error]
         field_type = field.__class__.__name__
         key = self.find_key(field, error)
         if not key:

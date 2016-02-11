@@ -2,7 +2,8 @@ from rest_framework_friendly_errors import settings
 
 from tests import BaseTestCase
 from tests.serializers import (SnippetModelSerializer,
-                               AnotherSnippetModelSerializer)
+                               AnotherSnippetModelSerializer,
+                               ThirdSnippetSerializer)
 from tests.utils import run_is_valid
 
 
@@ -155,3 +156,10 @@ class SnippetModelSerializerTestCase(BaseTestCase):
         s = run_is_valid(AnotherSnippetModelSerializer, data=self.data_set)
         with self.assertRaises(AssertionError):
             s.save()
+
+    def test_register_method_in_field_validation(self):
+        self.data_set['comment'] = 'small comment'
+        s = run_is_valid(ThirdSnippetSerializer, data=self.data_set)
+        code = settings.FRIENDLY_FIELD_ERRORS['CharField']['blank']
+        self.assertEqual(s.errors['errors'][0]['field'], 'comment')
+        self.assertEqual(s.errors['errors'][0]['code'], code)

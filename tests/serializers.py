@@ -122,3 +122,19 @@ class AnotherSnippetModelSerializer(FriendlyErrorMessagesMixin,
                                'is_proper_title': 5001}
 
     NON_FIELD_ERRORS = {'Must be a python language': 8000}
+
+
+class ThirdSnippetSerializer(
+    FriendlyErrorMessagesMixin,
+    serializers.ModelSerializer
+):
+    class Meta:
+        model = Snippet
+
+    def validate_comment(self, value):
+        if value[0] != value[0].upper():
+            self.register_error(
+                'First letter must be an uppercase', field_name='comment',
+                error_key='blank'
+            )
+        return value
