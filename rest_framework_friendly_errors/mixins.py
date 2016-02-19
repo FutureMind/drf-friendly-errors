@@ -65,8 +65,8 @@ class FriendlyErrorMessagesMixin(FieldMap):
         if field_type in self.field_map['boolean']:
             kwargs.update({'input': field_data})
         elif field_type in self.field_map['string']:
-            kwargs.update({'max_length': field.max_length,
-                           'min_length': field.min_length,
+            kwargs.update({'max_length': getattr(field, 'max_length', None),
+                           'min_length': getattr(field, 'min_length', None),
                            'value': field_data})
         elif field_type in self.field_map['numeric']:
 
