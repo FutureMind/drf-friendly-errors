@@ -7,8 +7,6 @@ from rest_framework_friendly_errors.utils import is_pretty
 def friendly_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
-    status_code = response.status_code
-
     if response is not None:
         if is_pretty(response):
             return response
@@ -18,7 +16,7 @@ def friendly_exception_handler(exc, context):
         response.data.pop('detail', {})
         response.data['code'] = error_code
         response.data['message'] = error_message
-        response.data['status_code'] = status_code
+        response.data['status_code'] = response.status_code
         # response.data['exception'] = exc.__class__.__name__
 
     return response
