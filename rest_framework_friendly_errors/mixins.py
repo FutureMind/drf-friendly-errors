@@ -102,14 +102,31 @@ class FriendlyErrorMessagesMixin(FieldMap):
             kwargs.update({'max_length': getattr(field, 'max_length', None)})
         return kwargs
 
-    def find_key(self, field, message):
-        for key in field.error_messages:
-            unformatted = field.error_messages[key]
-            kwargs = self.get_field_kwargs(
-                field, self.initial_data.get(field.field_name)
+    def does_not_exist_many_to_many_handler(self, field, message, kwargs):
+        unformatted = field.error_messages['does_not_exist']
+        new_kwargs = kwargs
+        for value in kwargs['value']:
+            new_kwargs['value'] = value
+            if unformatted.format(**new_kwargs) == message:
+                return True
+        return False
+
+    def find_key(self, field, message, field_name):
+        kwargs = self.get_field_kwargs(
+                field, self.initial_data.get(field_name)
             )
+        for key in field.error_messages:
+            if key == 'does_not_exist' \
+                and isinstance(kwargs.get('value'), list) \
+                and self.does_not_exist_many_to_many_handler(
+                    field, message, kwargs):
+                return key
+            unformatted = field.error_messages[key]
             if unformatted.format(**kwargs) == message:
                 return key
+        if getattr(field, 'child_relation', None):
+            return self.find_key(field=field.child_relation, message=message,
+                                 field_name=field_name)
         return None
 
     def _run_validator(self, validator, field, message):
@@ -129,7 +146,7 @@ class FriendlyErrorMessagesMixin(FieldMap):
         if error in self.registered_errors:
             return self.registered_errors[error]
         field_type = field.__class__.__name__
-        key = self.find_key(field, error)
+        key = self.find_key(field, error, field.field_name)
         if not key:
             # Here we know that error was raised by a custom field validator
             validator = self.find_validator(field, error)
