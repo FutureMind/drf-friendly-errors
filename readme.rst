@@ -39,12 +39,12 @@ into
                 "message" : "This field may not be blank."
             },
             {
-                "age" : 2023,
+                "code" : 2023,
                 "field" : "age",
                 "message" : "This field may not be null."
             },
             {
-                "age" : 2041,
+                "code" : 2041,
                 "field" : "description",
                 "message" : "Ensure this field has no more than 100 characters."
             },
