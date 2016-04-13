@@ -1,4 +1,5 @@
 from rest_framework.views import exception_handler
+from rest_framework.exceptions import APIException
 
 from rest_framework_friendly_errors import settings
 from rest_framework_friendly_errors.utils import is_pretty
@@ -6,6 +7,9 @@ from rest_framework_friendly_errors.utils import is_pretty
 
 def friendly_exception_handler(exc, context):
     response = exception_handler(exc, context)
+
+    if not response and settings.FRIENDLY_CATCH_ALL_EXCEPTIONS:
+        response = exception_handler(APIException(exc), context)
 
     if response is not None:
         if is_pretty(response):
