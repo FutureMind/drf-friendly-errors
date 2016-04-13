@@ -89,7 +89,9 @@ class FriendlyErrorMessagesMixin(FieldMap):
             kwargs.update({'input': field_data,
                            'input_type': type(field_data).__name__})
         elif field_type in self.field_map['file']:
-            kwargs.update({'max_length': field.max_length}),
+            kwargs.update({'max_length': field.max_length,
+                           'length': len(field.parent.data.get(
+                                field.source, ''))})
         elif field_type in self.field_map['composite']:
             kwargs.update({'input_type': type(field_data).__name__})
         elif field_type in self.field_map['relation']:
