@@ -9,7 +9,8 @@ def friendly_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
     if not response and settings.CATCH_ALL_EXCEPTIONS:
-        response = exception_handler(APIException(exc), context)
+        exc = APIException(exc)
+        response = exception_handler(exc, context)
 
     if response is not None:
         if is_pretty(response):
