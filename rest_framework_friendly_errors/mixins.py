@@ -169,7 +169,8 @@ class FriendlyErrorMessagesMixin(FieldMap):
                 code = self.FIELD_VALIDATION_ERRORS.get(name) or settings.FRIENDLY_VALIDATOR_ERRORS.get(name)
                 return {'code': code, 'field': field.field_name,
                         'message': error}
-        return {'code': settings.FRIENDLY_FIELD_ERRORS.get(field_type).get(key),
+        return {'code': settings.FRIENDLY_FIELD_ERRORS.get(
+                field_type, {}).get(key),
                 'field': field.field_name,
                 'message': error}
 
