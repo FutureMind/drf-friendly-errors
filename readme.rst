@@ -341,3 +341,7 @@ Pull requests won't be accepted without passing tests. You can run the test suit
     python runtests.py
 
 .. _Django Rest framework: http://django-rest-framework.org/
+
+Contributors
+------------
+- Geoffrey Lehée <socketubs>
