@@ -91,7 +91,7 @@ class FriendlyErrorMessagesMixin(FieldMap):
         elif field_type in self.field_map['file']:
             kwargs.update({'max_length': field.max_length,
                            'length': len(field.parent.data.get(
-                                field.source, ''))})
+                               field.source, ''))})
         elif field_type in self.field_map['composite']:
             kwargs.update({'input_type': type(field_data).__name__})
         elif field_type in self.field_map['relation']:
@@ -115,8 +115,8 @@ class FriendlyErrorMessagesMixin(FieldMap):
 
     def find_key(self, field, message, field_name):
         kwargs = self.get_field_kwargs(
-                field, self.initial_data.get(field_name)
-            )
+            field, self.initial_data.get(field_name)
+        )
         for key in field.error_messages:
             if key == 'does_not_exist' \
                 and isinstance(kwargs.get('value'), list) \
