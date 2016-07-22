@@ -24,7 +24,7 @@ FRIENDLY_FIELD_ERRORS = {
     'BooleanField': {'required': 2001, 'invalid': 2011, 'null': 2021},
     'NullBooleanField': {'required': 2001, 'invalid': 2011, 'null': 2021},
 
-    'CharField': {'required': 2002, 'null': 20022, 'blank': 2031,
+    'CharField': {'required': 2002, 'null': 2022, 'blank': 2031,
                   'max_length': 2041, 'min_length': 2051},
     'EmailField': {'required': 2002, 'invalid': 2012, 'null': 2022,
                    'blank': 2031, 'max_length': 2041, 'min_length': 2051},
