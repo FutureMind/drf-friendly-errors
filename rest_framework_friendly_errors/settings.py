@@ -63,7 +63,7 @@ FRIENDLY_FIELD_ERRORS = {
                    'invalid_image': 2111},
 
     'ListField': {'required': 2006, 'null': 2026, 'not_a_list': 2122,
-                  'empty': 2015},
+                  'empty': 2015, "max_length": 2041, "min_length": 2051},
     'DictField': {'required': 2006, 'null': 2026, 'not_a_dict': 2131,
                   'empty': 2015},
     'JSONField': {'required': 2006, 'invalid': 2141, 'null': 2026},
