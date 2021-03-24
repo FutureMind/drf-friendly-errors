@@ -344,4 +344,4 @@ Pull requests won't be accepted without passing tests. You can run the test suit
 
 Contributors
 ------------
-- Geoffrey Lehée <socketubs>
+- toxinu
