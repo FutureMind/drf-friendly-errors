@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as RestValidationError
+from rest_framework.serializers import Serializer
 from rest_framework.utils.serializer_helpers import ReturnDict
 
 from rest_framework_friendly_errors import settings
@@ -194,14 +195,26 @@ class FriendlyErrorMessagesMixin(FieldMap):
     def get_non_field_error_entries(self, errors):
         return [self.get_non_field_error_entry(error) for error in errors]
 
-    def build_pretty_errors(self, errors):
+    def build_pretty_errors(self, errors, serializer=None):
+        if serializer is None:
+            serializer = self
+
         pretty = []
         for error_type in errors:
             if error_type == 'non_field_errors':
                 pretty.extend(self.get_non_field_error_entries(
                     errors[error_type]))
             else:
-                field = self.fields[error_type]
+                field = serializer.fields[error_type]
+                if isinstance(field, Serializer) and type(errors[error_type]) == dict:
+                    child_errors = self.build_pretty_errors(errors[error_type], field)
+                    pretty.append({
+                        'code': child_errors['code'],
+                        'field': field.field_name,
+                        'message': child_errors['message'],
+                        'errors': child_errors['errors'],
+                    })
+                    continue
                 pretty.extend(
                     self.get_field_error_entries(errors[error_type], field),
                 )
