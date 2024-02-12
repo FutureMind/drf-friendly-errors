@@ -78,6 +78,7 @@ class SnippetModelSerializer(FriendlyErrorMessagesMixin,
                              serializers.ModelSerializer):
     class Meta:
         model = Snippet
+        fields = '__all__'
 
     def validate_comment(self, value):
         if value[0] != value[0].upper():
@@ -102,6 +103,7 @@ class AnotherSnippetModelSerializer(FriendlyErrorMessagesMixin,
                                     serializers.ModelSerializer):
     class Meta:
         model = Snippet
+        fields = '__all__'
 
     def validate_comment(self, value):
         if value[0] != value[0].upper():
@@ -130,6 +132,7 @@ class ThirdSnippetSerializer(
 ):
     class Meta:
         model = Snippet
+        fields = '__all__'
 
     def validate_comment(self, value):
         if value[0] != value[0].upper():

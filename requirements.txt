@@ -1,3 +1,4 @@
+-r requirements/requirements-core.txt
 -r requirements/requirements-packaging.txt
 -r requirements/requirements-testing.txt
 -r requirements/requirements-codestyle.txt
